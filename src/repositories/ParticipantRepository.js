@@ -3,10 +3,6 @@ const { getRandomElement } = require('../utils')
 
 
 class ParticipantsRepository {
-  constructor(dbAdapter) {
-    this.dbAdapter = dbAdapter
-  }
-
   getRandomParticipant(guildId) {
     return Participant.findAll({
       where: {

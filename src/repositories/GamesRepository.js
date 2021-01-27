@@ -1,10 +1,6 @@
 const { Game, Participant } = require('../../models')
 
 class GamesRepository {
-  constructor(dbAdapter) {
-    this.dbAdapter = dbAdapter
-  }
-
   getLastGame(guildId) {
     return Game.findOne({
       where: {
