@@ -1,7 +1,7 @@
 require('dotenv').config()
 const DiscordJS = require('discord.js')
 const DiscordClient = new DiscordJS.Client()
-const { temporaryMessage, getNickname, deleteMessage } = require('./src/chatFunctions')
+const { temporaryMessage, getNickname, deleteMessage } = require('./src/chat')
 const GamesRepository = require('./src/repositories/GamesRepository')
 const ParticipantRepository = require('./src/repositories/ParticipantRepository')
 const Game = require('./src/Game')
