@@ -2,7 +2,7 @@
 Охуенная игра для настоящих мужчин. Добавь на свой сервер и начинай прямо сейчас, если у тебя есть яйца.
 
 ## Invite link
-https://discordapp.com/oauth2/authorize?&client_id=463392133051580418&scope=bot&permissions=0
+https://discord.com/api/oauth2/authorize?client_id=803965732390961172&permissions=0&scope=bot
 
 ## Правила
 1) Добавить себя в список участников можно командой **!пидордня**.
