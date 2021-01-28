@@ -16,7 +16,6 @@ const participantsRepository = new ParticipantRepository()
 const game = new Game(participantsRepository, gamesRepository)
 
 const { pidorOfTheDayPhrases, resultPhrases } = require('./src/phrases')
-const roleName = 'Pidor of the day'
 
 DiscordClient.on('message', msg => {
   if (msg.content.match(/^!пидордня/) || msg.content.match(/^!пидорня/)) {
@@ -42,24 +41,6 @@ DiscordClient.on('message', msg => {
         await sleep(3500 + Math.random() * 1500)
         msg.channel.send(getRandomElement(resultPhrases) + '<@' + userId + '>!')
         msg.channel.stopTyping()
-
-        const role = msg.guild.roles.cache.find(r => r.name === roleName)
-        if (role) {
-          role.delete('Creating new role').catch(console.error)
-        }
-
-        msg.guild.roles.create({
-          data: {
-            name: roleName,
-            color: '#e74c3d',
-            hoist: true,
-            position: 0,
-            managed: true,
-          },
-          reason: 'New role for Pidor of the day',
-        }).then(role => {
-          msg.guild.members.cache.get(userId).roles.add(role).catch(console.error)
-        }).catch(console.error)
       }, reject => {
         temporaryMessage(msg.channel, reject, 8000)
       })
