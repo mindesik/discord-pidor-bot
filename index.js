@@ -9,7 +9,6 @@ const { getRandomElement, sleep } = require('./src/utils')
 
 const {
   BOT_TOKEN,
-  PIDOR_ROLE_ID,
 } = process.env
 
 const gamesRepository = new GamesRepository()
@@ -44,23 +43,21 @@ DiscordClient.on('message', msg => {
         msg.channel.send(winMsg)
         msg.channel.stopTyping()
 
-        if (PIDOR_ROLE_ID) {
-          const role = msg.guild.roles.cache.find(r => r.name === roleName)
-          if (role) {
-            role.delete('Creating new role').catch(console.error)
-          }
-
-          msg.guild.roles.create({
-            data: {
-              name: roleName,
-              color: '#e74c3d',
-              hoist: true,
-            },
-            reason: 'New role for Pidor of the day',
-          }).then(role => {
-            msg.guild.members.cache.get(msg.author.id).roles.add(role).catch(console.error)
-          }).catch(console.error)
+        const role = msg.guild.roles.cache.find(r => r.name === roleName)
+        if (role) {
+          role.delete('Creating new role').catch(console.error)
         }
+
+        msg.guild.roles.create({
+          data: {
+            name: roleName,
+            color: '#e74c3d',
+            hoist: true,
+          },
+          reason: 'New role for Pidor of the day',
+        }).then(role => {
+          msg.guild.members.cache.get(msg.author.id).roles.add(role).catch(console.error)
+        }).catch(console.error)
       }, reject => {
         temporaryMessage(msg.channel, reject, 8000)
       })
