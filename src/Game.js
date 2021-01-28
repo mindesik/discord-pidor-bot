@@ -46,7 +46,7 @@ class Game {
 
         this.gamesRepository.saveGameInformation(guildId, participant.id)
         this.participantRepository.scoreParticipant(participant.id)
-        resolve(getRandomElement(resultPhrases) + '<@' + participant.userId + '>!')
+        resolve(participant.userId)
       })
     })
   }
