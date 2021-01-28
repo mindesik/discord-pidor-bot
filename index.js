@@ -7,11 +7,17 @@ const ParticipantRepository = require('./src/repositories/ParticipantRepository'
 const Game = require('./src/Game')
 const { getRandomElement, sleep } = require('./src/utils')
 
+const {
+  BOT_TOKEN,
+  PIDOR_ROLE_ID,
+} = process.env
+
 const gamesRepository = new GamesRepository()
 const participantsRepository = new ParticipantRepository()
 const game = new Game(participantsRepository, gamesRepository)
 
 const { pidorOfTheDayPhrases } = require('./src/phrases')
+const roleName = 'Pidor of the day'
 
 DiscordClient.on('message', msg => {
   if (msg.content.match(/^!пидордня/) || msg.content.match(/^!пидорня/)) {
@@ -37,6 +43,24 @@ DiscordClient.on('message', msg => {
         await sleep(3500 + Math.random() * 1500)
         msg.channel.send(winMsg)
         msg.channel.stopTyping()
+
+        if (PIDOR_ROLE_ID) {
+          const role = msg.guild.roles.cache.find(r => r.name === roleName)
+          if (role) {
+            role.delete('Creating new role').catch(console.error)
+          }
+
+          msg.guild.roles.create({
+            data: {
+              name: roleName,
+              color: '#e74c3d',
+              hoist: true,
+            },
+            reason: 'New role for Pidor of the day',
+          }).then(role => {
+            msg.guild.members.cache.get(msg.author.id).roles.add(role).catch(console.error)
+          }).catch(console.error)
+        }
       }, reject => {
         temporaryMessage(msg.channel, reject, 8000)
       })
@@ -65,4 +89,4 @@ DiscordClient.on('message', msg => {
   }
 })
 
-DiscordClient.login(process.env.BOT_TOKEN).then(_ => console.log('The bot has started!'))
+DiscordClient.login(BOT_TOKEN).then(_ => console.log('The bot has started!'))
