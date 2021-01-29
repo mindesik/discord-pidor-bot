@@ -4,3 +4,4 @@ database.db3
 bot.log
 .env
 /yarn-error.log
+/.DS_Store
